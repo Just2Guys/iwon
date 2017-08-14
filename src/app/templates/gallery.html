@@ -1,0 +1,10 @@
+<div>
+  <div id="interior"routerLink="./interior"(mouseover)="blockMouseOver('left')"(mouseleave)="blockMouseLeave()"(click)="updatePage()">
+    <p>Interior</p>
+    <div src="" id="interiorImg" [ngStyle]="{'background-image':'url(' + img_interior + ')'}"></div>
+  </div>
+  <div id="exterior"routerLink="./exterior"(mouseover)="blockMouseOver('right')"(mouseleave)="blockMouseLeave()"(click)="updatePage()">
+    <p>Exterior</p>
+    <div src="" id="exteriorImg" [ngStyle]="{'background-image':'url(' + img_exterior + ')'}"></div>
+  </div>
+</div>

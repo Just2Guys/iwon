@@ -1,0 +1,16 @@
+<kb-page-slider [overlayIndicator]="true" dotColor="black"
+                [(page)]="pageNumber" (pageCountChange)="pageCount = $event">
+
+    <!-- Pages -->
+    <div *kbPages="let page of pages" [ngStyle] = "{ 'background':'url(' + page.image + ') bottom/cover no-repeat' }" id="sliderPage"></div>
+
+    <!-- Navigation Buttons -->
+    <kb-nav-button backward [showBackground]="true"
+                [(page)]="pageNumber" [pageCount]="pageCount">
+    </kb-nav-button>
+
+    <kb-nav-button forward [showBackground]="true"
+                [(page)]="pageNumber" [pageCount]="pageCount">
+    </kb-nav-button>
+
+</kb-page-slider>

@@ -1,0 +1,30 @@
+<header>
+  <div id="logo" *ngIf="user_computer">
+    <!--<img src="./assets/logo.png" id="logoImg">-->
+  </div>
+  <ul id="header" *ngIf="user_computer">
+    <li id="partner" routerLink="partnership" (click)="updataPage()"><a nohref>PARTNERSHIP</a></li>
+    <li id="projects" routerLink="projects" (click)="updatePage()"><a nohref>PROJECTS</a></li>
+    <li id="about" routerLink="about" (click)="updatePage()"><a nohref>ABOUT US</a></li>
+    <li id="main" routerLink="" (click)="updatePage()"><a nohref>HOME</a></li>
+  </ul>
+
+
+
+  <div id="menu-icon" *ngIf="user_mobile" (click)="menu()">
+    <div class="menu-stick" id="menu-stick-top"></div>
+    <div class="menu-stick" id="menu-stick-mid"></div>
+    <div class="menu-stick" id="menu-stick-bot"></div>
+  </div>
+</header>
+<div *ngIf="user_mobile" id="menu-close" (click)="menu()"></div>
+<div *ngIf="user_mobile" id="menu">
+  <a nohref id="main" routerLink="" (click)="updatePage()">HOME</a>
+  <a nohref id="about" routerLink="about" (click)="updatePage()">ABOUT US</a>
+  <a nohref id="projects" (click)="projectsBar()">PROJECTS</a>
+  <div id="projects-bar">
+    <p nohref id="interior" routerLink="projects/interior" (click)="updatePage()">Interior</p>
+    <p nohref id="exterior" routerLink="projects/exterior" (click)="updatePage()">Exterior</p>
+  </div>
+  <a nohref id="partner" routerLink="partnership" (click)="updataPage()">PARTNERSHIP</a>
+</div>
