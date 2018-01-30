@@ -7,6 +7,7 @@
     <li id="projects" routerLink="projects" (click)="updatePage()"><a nohref>PROJECTS</a></li>
     <li id="about" routerLink="about" (click)="updatePage()"><a nohref>ABOUT US</a></li>
     <li id="main" routerLink="" (click)="updatePage()"><a nohref>HOME</a></li>
+    <li id="admin_exit" (click)="adminExit()" *ngIf="user_admin"><a nohref>EXIT</a></li>
   </ul>
 
 

@@ -1,0 +1,18 @@
+<div *ngIf="!user_admin">
+  <form id="login_form" (ngSubmit) = "postLoginData()">
+    <input type="text" name="login" [(ngModel)]="user.login" id="input_login" placeholder="login">
+    <input type="password" name="password" [(ngModel)]="user.password" id="input_password" placeholder="password">
+    <button type="submit" name="button" id="button_submit">Submit</button>
+  </form>
+  <div id="error_element">
+    <p>ERROR:<br>Wrong login or password!</p>
+  </div>
+</div>
+<div id="div_admin" *ngIf="user_admin">
+  <p>You are admin!</p>
+  <br><br><br><br>
+  <image-upload
+    url="http://localhost:3000/send-file"
+    dropBoxMessage=""></image-upload>
+
+</div>

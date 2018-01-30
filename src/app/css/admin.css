@@ -1,0 +1,78 @@
+#login_form {
+  width: 500px;
+  height: 162px;
+  position: absolute;
+  padding: 40px;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  background-color: #ddd;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.4);
+  box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.4);
+}
+
+#login_form #input_login, #login_form #input_password {
+  width: calc(100% - 14px);
+  height: 30px;
+  padding: 5px;
+  margin: 5px 0px 5px 0px;
+  border-radius: 10px;
+  background-color: #eee;
+  font-size: 140%;
+}
+
+#login_form #button_submit {
+  width: 250px;
+  height: 44px;
+  padding: 5px;
+  margin: 20px 0px 5px 0px;
+  border-radius: 10px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: #ccc;
+  font-size: 140%;
+}
+
+#error_element {
+  opacity: 0;
+  right: 15px;
+  transform: translate(0px, calc(-100% - 80px));
+  position: absolute;
+  top: 75px;
+  width: auto;
+  height: auto;
+  background-color: red;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.4);
+  box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.4);
+  border-radius: 5px;
+  transition: all 0.5s ease-in-out;
+}
+
+#error_element p {
+  padding: 15px;
+  font-size: 110%;
+  font-weight: normal;
+}
+
+
+
+
+#div_admin {
+  position: absolute;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: green;
+}
+
+#div_admin p {
+  padding: 30px;
+  font-size: 300%;
+}

@@ -6,6 +6,9 @@ import { PageSliderModule }    from 'ng2-page-slider';
 import { MasonryModule } from 'angular2-masonry';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { HttpModule } from '@angular/http';
+import { FileSelectDirective, FileUploadModule } from 'ng2-file-upload';
+import { ImageUploadModule } from "angular2-image-upload";
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
@@ -15,6 +18,7 @@ import { GalleryComponent } from './gallery.component';
 import { GalleryInteriorComponent } from './gallery-interior.component';
 import { GalleryExteriorComponent } from './gallery-exterior.component';
 import { PartnershipComponent } from './partnership.component';
+import { AdminComponent } from './admin.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,8 @@ import { PartnershipComponent } from './partnership.component';
     GalleryComponent,
     GalleryInteriorComponent,
     GalleryExteriorComponent,
-    PartnershipComponent
+    PartnershipComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +38,9 @@ import { PartnershipComponent } from './partnership.component';
     FormsModule,
     MasonryModule,
     InfiniteScrollModule,
+    HttpModule,
+    FileUploadModule,
+    ImageUploadModule.forRoot(),
     RouterModule.forRoot([
       {
         path: '',
@@ -57,6 +65,10 @@ import { PartnershipComponent } from './partnership.component';
       {
         path: 'partnership',
         component: PartnershipComponent
+      },
+      {
+        path: 'admin',
+        component: AdminComponent
       }
     ])
   ],

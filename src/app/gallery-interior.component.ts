@@ -1,27 +1,12 @@
 import { Component } from '@angular/core';
-
+import { Http, Response, JsonpModule, Headers, RequestOptions } from '@angular/http';
 import { GALLERY_IMGS, IMG_LOAD_AMOUNT } from './mock-gallery-imgs';
+
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'gallery-page',
-  template: `
-      <masonry [useImagesLoaded]="true"class="masonry_main" id="masonry_main"
-        infinite-scroll [infiniteScrollDistance]="scrollDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()">
-        <masonry-brick class="masonry-brick" *ngFor="let item of items" (click)="slider_open(item.id)">
-          <div class="gallery-item">
-            <img src={{item.image}} class="gallery-img" (load)="masonryImgLoaded()">
-          </div>
-        </masonry-brick>
-      </masonry>
-    <div id="slider">
-      <div id="slider_blur" (click)="slider_close()"></div>
-      <div class="button_prev" (click)="prev()"></div>
-      <img [src]="slider_img_left" id="slider_img_left">
-      <img [src]="slider_img_center" id="slider_img_center" (click)="next()" (mouseover)="sliderImgMouseOver()" (mouseleave)="sliderImgMouseLeave()">
-      <img [src]="slider_img_right" id="slider_img_right">
-      <div id="button_next" (click)="next()" (mouseover)="sliderImgMouseOver()" (mouseleave)="sliderImgMouseLeave()"></div>
-    </div>
-  `,
+  templateUrl: 'templates/gallery-page.html',
   styleUrls: [
     'css/gallery.css',
     'css/gallery-slider.css'

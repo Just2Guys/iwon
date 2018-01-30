@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Http, Response, JsonpModule, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,10 @@ export class HeaderComponent {
   user_computer;
   menu_open=false;
   projectsBar_open=false;
-  constructor() {
+  user_admin = false;
+  login_session = 1;
+  constructor(private http: Http) {
+    this.checkLoginSession();
     if(matchMedia) {
       var mq=window.matchMedia("(min-width: 601px)");
       mq.addListener(this.WidthChange);
@@ -19,9 +24,43 @@ export class HeaderComponent {
     }
     window.addEventListener('orientationchange', this.doOnOrientationChange);
   }
+
+  //Getting user's session
+  checkLoginSession() {
+    this.http.get('http://localhost:3000/check-login-session',  {withCredentials: true})
+    .map((res:Response) => res.json())
+    .subscribe(data => {
+      if(data.session == 1) {
+        this.login_session = 1;
+      } else if(data.session == 2) {
+        this.login_session = 2;
+      }
+      this.updateLoginInfo();
+    });
+  }
+  //Checking if user is admin
+  updateLoginInfo() {
+    if(this.login_session == 1) {
+      this.user_admin = false;
+    } else if(this.login_session == 2) {
+      this.user_admin = true;
+    }
+  }
+
+  adminExit() {
+    this.http.get('http://localhost:3000/admin-exit', {withCredentials: true})
+    .map((res:Response) => res.json())
+    .subscribe(data => {
+      console.log(data.result);
+    });
+    this.updateLoginInfo();
+    this.updatePage();
+  }
+
   updatePage() {
     location.reload();
   }
+
   WidthChange(mq) {
     if(mq.matches) {
       this.user_computer=true;
@@ -31,6 +70,7 @@ export class HeaderComponent {
       this.user_mobile=true;
     }
   }
+
   menu() {
     if(this.menu_open) {
       document.getElementById("menu-close").style.display="none";
@@ -68,6 +108,7 @@ export class HeaderComponent {
       this.menu_open=true;
     }
   }
+
   projectsBar() {
     if(this.projectsBar_open) {
       document.getElementById("projects-bar").style.height="0";

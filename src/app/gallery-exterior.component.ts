@@ -1,27 +1,11 @@
 import { Component } from '@angular/core';
+import { Http, Response, JsonpModule, Headers, RequestOptions } from '@angular/http';
 
-import { GALLERY_IMGS, IMG_LOAD_AMOUNT } from './mock-gallery-imgs';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'gallery-page',
-  template: `
-      <masonry [useImagesLoaded]="true"class="masonry_main" id="masonry_main"
-        infinite-scroll [infiniteScrollDistance]="scrollDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()">
-        <masonry-brick class="masonry-brick" *ngFor="let item of items" (click)="slider_open(item.id)">
-          <div class="gallery-item">
-            <img src={{item.image}} class="gallery-img" (load)="masonryImgLoaded()">
-          </div>
-        </masonry-brick>
-      </masonry>
-    <div id="slider">
-      <div id="slider_blur" (click)="slider_close()"></div>
-      <div class="button_prev" (click)="prev()"></div>
-      <img [src]="slider_img_left" id="slider_img_left">
-      <img [src]="slider_img_center" id="slider_img_center" (click)="next()" (mouseover)="sliderImgMouseOver()" (mouseleave)="sliderImgMouseLeave()">
-      <img [src]="slider_img_right" id="slider_img_right">
-      <div id="button_next" (click)="next()" (mouseover)="sliderImgMouseOver()" (mouseleave)="sliderImgMouseLeave()"></div>
-    </div>
-  `,
+  templateUrl: 'templates/gallery-page.html',
   styleUrls: [
     'css/gallery.css',
     'css/gallery-slider.css'
@@ -29,9 +13,8 @@ import { GALLERY_IMGS, IMG_LOAD_AMOUNT } from './mock-gallery-imgs';
 })
 
 export class GalleryExteriorComponent {
-  img_type='exterior';
   img_amount_total=1;
-  img_load_amount=IMG_LOAD_AMOUNT;
+  img_load_amount;
   slider_position=1;
   slider_maxposition;
   img_amount=0;
@@ -58,7 +41,7 @@ export class GalleryExteriorComponent {
   user_mobile;
   public img_array=[];
   public items=[];
-  constructor() {
+  constructor(private http:Http) {
     if(matchMedia) {
       var mq=window.matchMedia("(min-width: 601px)");
       mq.addListener(this.WidthChange);
@@ -69,11 +52,14 @@ export class GalleryExteriorComponent {
       document.body.offsetHeight, document.documentElement.offsetHeight,
       document.body.clientHeight, document.documentElement.clientHeight
     );
-    this.img_array=GALLERY_IMGS;
+    this.http.get('http://localhost:3000/list-of-images/exterior', {withCredentials: true})
+    .map((res:Response) => res.json())
+    .subscribe(data => {
+      this.img_load_amount = data[0];
+      this.img_array = data[1];
+    });
     for (let i = 0; this.items.length < this.img_load_amount; i++ ) {
-      if(this.img_array[i].type === this.img_type) {
-        this.items.push(this.img_array[i]);
-      }
+      this.items.push(this.img_array[i]);
       this.img_amount_total++;
     }
     this.slider_maxposition=this.items.length;
@@ -99,14 +85,14 @@ export class GalleryExteriorComponent {
   }
   createSlider() {
     if(this.slider_position-1<1) {
-      this.slider_img_left=this.items[this.slider_maxposition+this.slider_position-3].image;
-    }else{this.slider_img_left=this.items[this.slider_position-2].image;}
+      this.slider_img_left=this.items[this.slider_maxposition+this.slider_position-3];
+    }else{this.slider_img_left=this.items[this.slider_position-2];}
 
-    this.slider_img_center=this.items[this.slider_position-1].image;
+    this.slider_img_center=this.items[this.slider_position-1];
 
     if(this.slider_position+2>this.slider_maxposition) {
-      this.slider_img_right=this.items[0].image;
-    }else{this.slider_img_right=this.items[this.slider_position].image;}
+      this.slider_img_right=this.items[0];
+    }else{this.slider_img_right=this.items[this.slider_position];}
   }
   next() {
     this.slider_img_element_left.id="slider_img_left_overflow";
@@ -162,12 +148,10 @@ export class GalleryExteriorComponent {
       }else{
         let img_amount_for = this.img_amount+this.img_load_amount;
         for ( ; this.img_amount < img_amount_for; this.img_amount_total++) {
-          if(this.img_array[this.img_amount_total].type === this.img_type) {
-            this.items.push(this.img_array[this.img_amount_total]);
-            this.items[this.img_amount].id=this.img_amount+1;
-            this.slider_maxposition=this.items.length;
-            this.img_amount++;
-          }
+          this.items.push(this.img_array[this.img_amount_total]);
+          this.items[this.img_amount].id=this.img_amount+1;
+          this.slider_maxposition=this.items.length;
+          this.img_amount++;
           if(this.img_amount_total+1 === this.img_array.length) break;
         }
       }
